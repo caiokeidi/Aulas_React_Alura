@@ -12,4 +12,5 @@
 
 .conteudo-principal{
     flex-grow: 3;
+    width: 70vw;
 }

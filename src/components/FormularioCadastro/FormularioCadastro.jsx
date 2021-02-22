@@ -6,6 +6,7 @@ class FormularioCadastro extends Component {
     super(props); //Preciso chamar isso por conta do Component que estou herdando.
     this.titulo = '';
     this.texto = '';
+    this.categoria = 'Sem Categoria';
   }
 
   _handleMudancaTitulo(evento){
@@ -18,10 +19,15 @@ class FormularioCadastro extends Component {
     this.texto = evento.target.value
   }
 
+  _handleMudancaCategoria(evento){
+    evento.stopPropagation();
+    this.categoria = evento.target.value;
+  }
+
   _criarNota(evento){
     evento.preventDefault(); //Parar comportamento padrão de reiniciar a página ao dar submit
     evento.stopPropagation(); //Evitar propagação do evento na árvore de execução.
-    this.props.criarNota(this.titulo, this.texto)
+    this.props.criarNota(this.titulo, this.texto, this.categoria)
   }
 
   render() {
@@ -29,7 +35,8 @@ class FormularioCadastro extends Component {
       <form className="form-cadastro"
         onSubmit={this._criarNota.bind(this)}  
       >
-        <select className='form-cadastro_input'>
+        <select onChange={this._handleMudancaCategoria.bind(this)} className='form-cadastro_input'>
+          <option>Sem Categoria</option>
           {this.props.categorias.map((categoria) => {
             return <option>{categoria}</option>
           })}

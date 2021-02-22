@@ -14,13 +14,16 @@ class ListaDeNotas extends Component {
     return (
       <ul className='lista-notas'>
         {this.props.notas.map((nota, index) => {
+          {console.log(nota)}
           return (
             <li className='lista-notas_item' key={index}>
               <CardNotas 
               indice = {index}
               apagarNota = {this.props.apagarNota}
               titulo={nota.titulo} 
-              texto={nota.texto}/>
+              texto={nota.texto}
+              categoria = {nota.categorias}
+              />
             </li>
           );
         })}
