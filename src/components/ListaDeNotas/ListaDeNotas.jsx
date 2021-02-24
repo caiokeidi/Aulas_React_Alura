@@ -4,16 +4,25 @@ import './estilo.css'
 
 
 class ListaDeNotas extends Component {
-  //Não precisamos criar esse constructor aqui, pois quando só queremos herdar as propriedades, o js faz isso automaticamente
-  //sem precisar criar esse constructor.
-  //constructor(props){
-  //  super(props)
-  //}
+  constructor(){
+    super();
+    this.state = {notas:[]}
+  }
+
+  componentDidMount(){
+    this.props.notas.inscrever(this._novasNotas.bind(this));
+  }
+
+  _novasNotas(notas){
+    this.setState({...this.state, notas})
+  }
+
+
 
   render() {
     return (
       <ul className='lista-notas'>
-        {this.props.notas.map((nota, index) => {
+        {this.state.notas.map((nota, index) => {
           {console.log(nota)}
           return (
             <li className='lista-notas_item' key={index}>
@@ -22,7 +31,7 @@ class ListaDeNotas extends Component {
               apagarNota = {this.props.apagarNota}
               titulo={nota.titulo} 
               texto={nota.texto}
-              categoria = {nota.categorias}
+              categoria = {nota.categoria}
               />
             </li>
           );

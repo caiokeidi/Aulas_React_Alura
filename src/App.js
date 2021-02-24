@@ -3,53 +3,32 @@ import FormularioCadastro from './components/FormularioCadastro'
 import ListaDeNotas from './components/ListaDeNotas'
 import ListaDeCategorias from './components/ListaDeCategorias'
 import './assets/App.css'
+import Categorias from './dados/categorias'
+import ArrayDeNotas from './dados/notas'
 
 class App extends Component {
   constructor(){
     super()
-    this.state = {
-      notas:[],
-      categorias:["Trabalho", "Esportes"]
-    }
+    this.categorias = new Categorias;
+    this.notas = new ArrayDeNotas;
   }
-
-  criarNota(titulo, texto, categorias){
-    const novaNota = {titulo, texto, categorias}
-    const novoArrayNotas = [...this.state.notas, novaNota]
-    const novoEstado = {
-      notas:novoArrayNotas
-    }
-    this.setState(novoEstado)
-  }
-
-  deletarNota(index){
-    let arrayNotas = this.state.notas;
-    arrayNotas.splice(index, 1)
-    this.setState({notas:arrayNotas})
-  }
-
-  adicionarCategoria(nome){
-    const novoArrayCategorias = [...this.state.categorias, nome]
-    const novoEstado = {...this.state, categorias:novoArrayCategorias}
-    this.setState(novoEstado)
-  }
-
 
   render(){
     return (
     <section className='conteudo'>
-      <FormularioCadastro 
-        categorias = {this.state.categorias}
-        criarNota={this.criarNota.bind(this)}
+      <FormularioCadastro  
+        categorias = {this.categorias}
+        criarNota={this.notas.adicionarNota.bind(this.notas)}
       />
       <main className="conteudo-principal">
         <ListaDeCategorias 
-          adicionarCategoria = {this.adicionarCategoria.bind(this)}
-          categorias = {this.state.categorias}
+          //Precisamos agora usar o bind aqui para fazer referência ao this.categorias
+          adicionarCategoria = {this.categorias.adicionarCategoria.bind(this.categorias)}
+          categorias = {this.categorias}
           />
         <ListaDeNotas
-          apagarNota={this.deletarNota.bind(this)}
-          notas={this.state.notas}
+          apagarNota={this.notas.apagarNota.bind(this.notas)}
+          notas={this.notas}
         />
       </main>
       
